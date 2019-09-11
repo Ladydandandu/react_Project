@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Form, Input, Button, Icon, message} from 'antd';
-import axios from 'axios';
+
+import {reqLogin} from '../../api/index';
+
 import {connect} from  'react-redux';
 import {saveUser} from "../../redux/action-creators";
-
-
 import logo from './logo.png';
 import './index.less';
 
@@ -87,45 +87,65 @@ class Login extends Component {
 
 
 
-                axios.post('http://localhost:3000/api/login',{
-                    username,
-                    password
-                })
-                    //请求成功触发的回调函数
-                    .then((response)=>{
-                        //请求成功
-                        //判断status的值，来判断是否登录成功
-                        if (response.data.status === 0) {
-                        //    登录成功
-                            message.success('登陆成功');
-                        //  保存用户数据   redux  localStorage  /   sessionStorage
-                            this.props.saveUser(response.data.data);
-                        //    跳转到  /  路由
-                            /*
-                            *   跳转路由的两种方法:
-                            *   第一种：
-                            *           return <Redirect to="/"/>     用于在render方法中重定向
-                            *   第二种：
-                            *           this.props.history.replace('/')   用于在非render方法中进行跳转
-                            *           .replace  替换路由
-                            *           .push     添加路由  还可以回到之前的路由
-                            *
-                            * */
-                        //     return <Redirect to="/"/>
+                // instance.post('/login',{
+                //     username,
+                //     password
+                // })
+                //     //请求成功触发的回调函数
+                //     .then((response)=>{
+                //         //请求成功
+                //         //判断status的值，来判断是否登录成功
+                //         if (response.data.status === 0) {
+                //         //    登录成功
+                //             message.success('登陆成功');
+                //         //  保存用户数据   redux  localStorage  /   sessionStorage
+                //             this.props.saveUser(response.data.data);
+                //         //    跳转到  /  路由
+                //             /*
+                //             *   跳转路由的两种方法:
+                //             *   第一种：
+                //             *           return <Redirect to="/"/>     用于在render方法中重定向
+                //             *   第二种：
+                //             *           this.props.history.replace('/')   用于在非render方法中进行跳转
+                //             *           .replace  替换路由
+                //             *           .push     添加路由  还可以回到之前的路由
+                //             *
+                //             * */
+                //         //     return <Redirect to="/"/>
+                //             this.props.history.replace('/') ;
+                //         } else {
+                //         //    登录失败
+                //             message.error(response.data.msg)
+                //         }
+                //     })
+                //     //请求失败出发的回调函数
+                //     .catch((error)=>{
+                //         //请求失败---登录失败
+                //         message.error('未知错误，请联系管理员~');
+                //     })
+                //     .finally(()=>{
+                //     //    不管成功/失败都会触发
+                //     //    清空密码
+                //         this.props.form.resetFields(['password']);
+                //     })
+
+
+
+
+               reqLogin(username,password)
+                //请求成功触发的回调函数
+                    .then((result)=>{
+                            //    登录成功
+                            message.success('登录成功');
+                            //  保存用户数据   redux  localStorage  /   sessionStorage
+                            this.props.saveUser(result);
+                            //    跳转到  /  路由
+                            //     return <Redirect to="/"/>
                             this.props.history.replace('/') ;
-                        } else {
-                        //    登录失败
-                            message.error(response.data.msg)
-                        }
                     })
-                    //请求失败出发的回调函数
-                    .catch((error)=>{
-                        //请求失败---登录失败
-                        message.error('未知错误，请联系管理员~');
-                    })
-                    .finally(()=>{
-                    //    不管成功/失败都会触发
-                    //    清空密码
+                    .catch(()=>{
+                        //    不管成功/失败都会触发
+                        //    清空密码
                         this.props.form.resetFields(['password']);
                     })
             }
