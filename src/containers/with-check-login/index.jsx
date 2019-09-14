@@ -24,10 +24,13 @@ function withCheckLogin(WrappedComponent) {
                 *       如果用户没有登录过，  跳转到  /login
                 * */
                 //当前路径
-                const {token, location, history, match} = this.props;
-                const {pathname} = location;
+                const {
+                    token,
+                    ...rest //包含剩下所有属性的一个对象{ location, history, match, children }
+                } = this.props;
+                const { location : { pathname } } = rest;
 
-                if (pathname==='/login') {
+                if (pathname === '/login') {
                     if (token) {
                         return <Redirect to="/"/>
                     }
@@ -40,7 +43,7 @@ function withCheckLogin(WrappedComponent) {
                 // if (pathname !== '/login' && !token) return <Redirect to="/login"/>;
 
 
-                return (<WrappedComponent location={location} history={history} match={match}/>)
+                return (<WrappedComponent {...rest}/>)
             }
         }
     )
