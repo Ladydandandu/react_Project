@@ -4,4 +4,4 @@
 
 import {SAVE_USER} from './action-type';
 
-export const saveUser = (data) => ({type: SAVE_USER, data: data})
+export const saveUser = (user) => ({type: SAVE_USER, data: user})

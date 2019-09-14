@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {Form, Input, Button, Icon, message} from 'antd';
+import {reqLogin} from '../../api';
+import withCheckLogin from '../with-check-login';
 
-import {reqLogin} from '../../api/index';
-
-import {connect} from  'react-redux';
+import {connect} from 'react-redux';
 import {saveUser} from "../../redux/action-creators";
 import logo from './logo.png';
 import './index.less';
 
+
+@withCheckLogin
 @connect(
-     null,
+    null,
     {saveUser}
 )
-
 @Form.create()
 class Login extends Component {
     /**
@@ -69,8 +70,8 @@ class Login extends Component {
                  1. jsonp  现在不适用
                  2. cors  修改服务器代码
                  3. proxy  服务器代理模式  （正向代理）
-                    正向代理
-                    反向代理（nginx）
+                 正向代理
+                 反向代理（nginx）
 
                  "proxy": "http://localhost:5000" 开启代理服务器
                  http://localhost:5000 --> 就是目标服务器地址
@@ -82,7 +83,7 @@ class Login extends Component {
                  4. 代理服务器返回响应给浏览器
 
                  缺点：
-                    只能用于开发环境，不能用于上线环境
+                 只能用于开发环境，不能用于上线环境
                  * */
 
 
@@ -130,20 +131,18 @@ class Login extends Component {
                 //     })
 
 
-
-
-               reqLogin(username,password)
+                reqLogin(username, password)
                 //请求成功触发的回调函数
-                    .then((result)=>{
-                            //    登录成功
-                            message.success('登录成功');
-                            //  保存用户数据   redux  localStorage  /   sessionStorage
-                            this.props.saveUser(result);
-                            //    跳转到  /  路由
-                            //     return <Redirect to="/"/>
-                            this.props.history.replace('/') ;
+                    .then((result) => {
+                        //    登录成功
+                        message.success('登录成功');
+                        //  保存用户数据   redux  localStorage  /   sessionStorage
+                        this.props.saveUser(result);
+                        //    跳转到  /  路由
+                        //     return <Redirect to="/"/>
+                        this.props.history.replace('/');
                     })
-                    .catch(()=>{
+                    .catch(() => {
                         //    不管成功/失败都会触发
                         //    清空密码
                         this.props.form.resetFields(['password']);
@@ -207,7 +206,7 @@ class Login extends Component {
                         <Form.Item>
                             {/*type   决定button的样式*/}
                             {/*htmlType    决定button的功能*/}
-                            <Button type="primary" htmlType="submit" className="login-btn" >登录</Button>
+                            <Button type="primary" htmlType="submit" className="login-btn">登录</Button>
                         </Form.Item>
                     </Form>
 
