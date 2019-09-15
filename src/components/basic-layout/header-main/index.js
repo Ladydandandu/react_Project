@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {Button, Icon} from 'antd';
 import screenfull from 'screenfull';
+import { withTranslation, getI18n } from 'react-i18next';
 
 import './index.less';
 
+@withTranslation()
 class HeaderMain extends Component {
     state = {
-        isScreenFull: false
+        isScreenFull: false,
+        isEnglish:getI18n().language === 'en'
     };
 
     screenFull = () => {
@@ -22,6 +25,16 @@ class HeaderMain extends Component {
         })
     };
 
+    changeLanguage = () => {
+        const isEnglish = !this.state.isEnglish;
+        //传入的参数是什么，就切换成什么语言
+        this.props.i18n.changeLanguage(isEnglish ? 'en' : 'zh-CN');
+        this.setState({
+            isEnglish
+        })
+    };
+
+
     componentDidMount() {
         //绑定事件
         screenfull.on('change', this.change);
@@ -32,14 +45,15 @@ class HeaderMain extends Component {
     }
 
 
+
     render() {
-        const {isScreenFull} = this.state;
+        const {isScreenFull,isEnglish} = this.state;
 
         return <div className="header-main">
             <div className="header-main-top">
                 <Button size="small" onClick={this.screenFull}><Icon
                     type={isScreenFull ? 'fullscreen-exit' : 'fullscreen'}/></Button>
-                <Button size="small" className="header-main-btn">English</Button>
+                <Button size="small" className="header-main-btn" onClick={this.changeLanguage}>{isEnglish ? '中文':'English'}</Button>
                 <span>欢迎，xxx</span>
                 <Button type="link">退出</Button>
             </div>

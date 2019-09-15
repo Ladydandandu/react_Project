@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {Icon, Menu} from "antd";
 import {withRouter, Link} from 'react-router-dom';
-
+import { withTranslation} from 'react-i18next';
 import menus from '../../../config/menus';
 
 const {SubMenu} = Menu;
 
+@withTranslation()
 @withRouter
 class LeftNav extends Component {
     createItem = (menu) => {
         return <Menu.Item key={menu.key}>
             <Link to={menu.key}>
                 <Icon type={menu.icon}/>
-                <span>{menu.title}</span>
+                <span>{this.props.t(menu.title)}</span>
             </Link>
         </Menu.Item>
     };
@@ -28,7 +29,7 @@ class LeftNav extends Component {
                     title={
                         <span>
                           <Icon type={menu.icon}/>
-                          <span>{menu.title}</span>
+                          <span>{this.props.t(menu.title)}</span>
                         </span>
                     }
                 >
