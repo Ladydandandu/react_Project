@@ -4,8 +4,8 @@
 * **/
 
 import {combineReducers} from 'redux';
-import {SAVE_USER} from './action-type';
-import {getItem, setItem} from '../utils/storage';
+import {SAVE_USER,REMOVE_USER,SET_TITLE} from './action-type';
+import {getItem, removeItem, setItem} from '../utils/storage';
 
 
 //初始化数据
@@ -21,13 +21,23 @@ function user(prevState = initUser, action) {
             setItem('user', action.data.user);
             setItem('token', action.data.token);
             return action.data;
+        case REMOVE_USER:
+        //    清除用户数据
+            removeItem('user');
+            removeItem('token');
+            return {
+                user:{},
+                token:''
+            };
         default:
             return prevState;
     }
 }
 
-function fn(prevState={},action){
+function title(prevState='',action){
         switch (action.type) {
+            case SET_TITLE :
+                return action.data;
             default:
                 return prevState;
         }
@@ -37,5 +47,5 @@ function fn(prevState={},action){
 
 export default combineReducers({
     user,
-    fn
+    title
 })

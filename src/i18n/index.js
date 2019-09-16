@@ -33,6 +33,8 @@ i18n
 *    3.定义语言包
 *    4.用国际化App必须包一个<Suspense></Suspense>
 *    5.需要用时引入withTranslation  @withTranslation()
+*    t用来显示当前语言
+*    i18n用来切换语言
 *
 * */
 
