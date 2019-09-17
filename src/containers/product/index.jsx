@@ -37,10 +37,10 @@ class Product extends Component {
         },
         {
             title: '操作',
-            render: () => {
+            render: (product) => {
                 return <div>
                     <Button type="link">详情</Button>
-                    <Button type="link">修改</Button>
+                    <Button type="link" onClick={this.goSaveUpdate(product)}>修改</Button>
                 </div>
             }
         },
@@ -63,12 +63,15 @@ class Product extends Component {
     // change=(pageNum, pageSize)=>{
     //     this.getProducts(pageNum, pageSize)
     // };
-    goSaveUpdate = () => {
-        this.props.history.push('/product/saveupdate');
+    goSaveUpdate = (product) => {
+        return ()=>{
+            this.props.history.push('/product/saveupdate',product);
+        }
+
     }
 
     render() {
-        const {products, total} = this.state
+        const {products, total} = this.state;
         return <Card
             title={
                 <div>
@@ -82,7 +85,7 @@ class Product extends Component {
                 </div>
             }
             extra={
-                <Button type="primary" onClick={this.goSaveUpdate}><Icon type="plus"/>添加商品</Button>
+                <Button type="primary" onClick={this.goSaveUpdate()}><Icon type="plus"/>添加商品</Button>
             }
         >
             <Table

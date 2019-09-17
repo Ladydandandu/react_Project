@@ -51,8 +51,13 @@ class Category extends Component {
 
 
     componentDidMount() {
-        //    发送请求， 请求分类数据，更新redux状态
-        this.props.getCategories();
+        if (this.props.categories.length) {
+            return;
+        } else{
+            //    发送请求， 请求分类数据，更新redux状态
+            this.props.getCategories();
+        }
+
     }
 
     switchModal = (key, value) => {
@@ -107,7 +112,6 @@ class Category extends Component {
     };
 
     render() {
-
         /*
         *     //列的表头
         const columns = [

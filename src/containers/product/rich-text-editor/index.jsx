@@ -1,15 +1,35 @@
-import React, { Component } from 'react';
-import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
+import React, {Component} from 'react';
+import {EditorState, ContentState} from 'draft-js';
+import {Editor} from 'react-draft-wysiwyg';
 import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './index.less';
+import PropTypes from 'prop-types';
 
 class RichTextEditor extends Component {
-    state = {
-        editorState: EditorState.createEmpty(),
+    static propTypes = {
+        detail: PropTypes.string.isRequired
     }
+
+    constructor(props) {
+        super(props);
+
+        const {detail} = this.props;
+        let editorState;
+        if (detail) {
+            const blocksFromHtml = htmlToDraft(detail);
+            const {contentBlocks, entityMap} = blocksFromHtml;
+            const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+            editorState = EditorState.createWithContent(contentState);
+        } else {
+            editorState = EditorState.createEmpty()
+        }
+
+        this.state = {
+            editorState
+        }
+    }
+
 
     onEditorStateChange = (editorState) => {
         this.setState({
@@ -18,7 +38,7 @@ class RichTextEditor extends Component {
     };
 
     render() {
-        const { editorState } = this.state;
+        const {editorState} = this.state;
         return (
             <div>
                 <Editor
@@ -28,8 +48,8 @@ class RichTextEditor extends Component {
                     onEditorStateChange={this.onEditorStateChange}
                 />
                 {/*<textarea*/}
-                    {/*disabled*/}
-                    {/*value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}*/}
+                {/*disabled*/}
+                {/*value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}*/}
                 {/*/>*/}
             </div>
         );

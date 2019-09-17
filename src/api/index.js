@@ -21,3 +21,9 @@ export const reqUpdateCategory = (categoryId, categoryName) => axios.post('/cate
 
 //请求获取列表
 export const reqGetProducts = (pageNum, pageSize) => axios.get('/product/list',{params: {pageNum, pageSize}});
+
+// 添加商品列表
+export const reqAddProducts = ({name,desc,price,categoryId,detail}) => axios.post('/product/add',{name,desc,price,categoryId,detail});
+
+//更新商品
+export const reqUpdateProducts = ({name,desc,price,categoryId,detail,productId}) => axios.post('/product/update',{name,desc,price,categoryId,detail,productId});
