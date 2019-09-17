@@ -11,7 +11,13 @@ export const reqLogin = (username, password) => axios.post('/login', {username, 
 export const reqGetCategories = () => axios.get('/category/get');
 
 // 请求添加数据
-export const reqAddCategory = (categoryName) =>axios.post('/category/add',{categoryName});
+export const reqAddCategory = (categoryName) => axios.post('/category/add', {categoryName});
 
 //请求更新数据
-export const reqUpdateCategory = (categoryId,categoryName) =>axios.post('/category/update',{categoryId,categoryName});
+export const reqUpdateCategory = (categoryId, categoryName) => axios.post('/category/update', {
+    categoryId,
+    categoryName
+});
+
+//请求获取列表
+export const reqGetProducts = (pageNum, pageSize) => axios.get('/product/list',{params: {pageNum, pageSize}});
