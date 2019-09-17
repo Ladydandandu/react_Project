@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Card, Select, Input, Button, Icon, Table} from 'antd';
 import {reqGetProducts} from '../../api/index';
 
-
 import './index.less';
 
 const {Option} = Select;
@@ -64,10 +63,12 @@ class Product extends Component {
     // change=(pageNum, pageSize)=>{
     //     this.getProducts(pageNum, pageSize)
     // };
-
+    goSaveUpdate = () => {
+        this.props.history.push('/product/saveupdate');
+    }
 
     render() {
-        const {products,total} = this.state
+        const {products, total} = this.state
         return <Card
             title={
                 <div>
@@ -81,7 +82,7 @@ class Product extends Component {
                 </div>
             }
             extra={
-                <Button type="primary"><Icon type="plus"/>添加商品</Button>
+                <Button type="primary" onClick={this.goSaveUpdate}><Icon type="plus"/>添加商品</Button>
             }
         >
             <Table
@@ -91,12 +92,12 @@ class Product extends Component {
                 pagination={{
                     showQuickJumper: true,
                     showSizeChanger: true,
-                    pageSizeOptions: ['3','6','9','12'],
+                    pageSizeOptions: ['3', '6', '9', '12'],
                     defaultPageSize: 3,
                     //总数
                     total,
-                    onChange:this.getProducts, //点击第二页或者后面的页码，请求对应的数据
-                    onShowSizeChange:this.getProducts, //点击每页显示数据的数量，请求对应的数据
+                    onChange: this.getProducts, //点击第二页或者后面的页码，请求对应的数据
+                    onShowSizeChange: this.getProducts, //点击每页显示数据的数量，请求对应的数据
                 }}
                 rowKey="_id"
 

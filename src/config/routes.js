@@ -1,6 +1,7 @@
 import Home from '../components/home';
 import Category from '../containers/category/index';
 import Product from '../containers/product';
+import SaveUpdate from '../containers/product/save-update';
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path:'/product',  //路由路径
         exact:true,  //是否严格匹配路径
         component:Product   //组件
+    },
+    {
+        path:'/product/saveupdate',  //路由路径
+        exact:true,  //是否严格匹配路径
+        component:SaveUpdate   //组件
     },
 ];
 
