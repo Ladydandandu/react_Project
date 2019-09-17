@@ -4,7 +4,7 @@
 * **/
 
 import {combineReducers} from 'redux';
-import {SAVE_USER,REMOVE_USER,SET_TITLE} from './action-type';
+import {SAVE_USER, REMOVE_USER, SET_TITLE, GET_CATEGORIES_SUCCESS,ADD_CATEGORY_SUCCESS} from './action-type';
 import {getItem, removeItem, setItem} from '../utils/storage';
 
 
@@ -41,11 +41,21 @@ function title(prevState='',action){
             default:
                 return prevState;
         }
-}
+};
 
-
+function categories(prevState=[],action){
+    switch (action.type) {
+        case GET_CATEGORIES_SUCCESS :
+            return action.data;
+        case ADD_CATEGORY_SUCCESS:
+            return [...prevState,action.data];
+        default:
+            return prevState;
+    }
+};
 
 export default combineReducers({
     user,
-    title
+    title,
+    categories
 })
