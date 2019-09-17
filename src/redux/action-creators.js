@@ -2,9 +2,17 @@
 * 包含n个  生产action对象的工厂函数  模块
 * */
 
-import {SAVE_USER, REMOVE_USER, SET_TITLE, GET_CATEGORIES_SUCCESS,ADD_CATEGORY_SUCCESS} from './action-type';
+import {
+    SAVE_USER,
+    REMOVE_USER,
+    SET_TITLE,
+    GET_CATEGORIES_SUCCESS,
+    ADD_CATEGORY_SUCCESS,
+    UPDATE_CATEGORY_SUCCESS,
 
-import {reqGetCategories,reqAddCategory} from '../api/index';
+} from './action-type';
+
+import {reqGetCategories,reqAddCategory,reqUpdateCategory} from '../api/index';
 //保存用户数据
 export const saveUser = (user) => ({type: SAVE_USER, data: user});
 
@@ -37,4 +45,10 @@ export const addCategory = (categoryName) => {
 
 
 //修改分类数据
-
+const updateCategorySuccess = (category) => ({type: UPDATE_CATEGORY_SUCCESS, data: category});
+export const updateCategory = (categoryId,categoryName) => {
+    return async (dispatch) => {
+        const result = await reqUpdateCategory(categoryId,categoryName);
+        dispatch(updateCategorySuccess(result));
+    }
+};

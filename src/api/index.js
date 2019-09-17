@@ -12,3 +12,6 @@ export const reqGetCategories = () => axios.get('/category/get');
 
 // 请求添加数据
 export const reqAddCategory = (categoryName) =>axios.post('/category/add',{categoryName});
+
+//请求更新数据
+export const reqUpdateCategory = (categoryId,categoryName) =>axios.post('/category/update',{categoryId,categoryName});

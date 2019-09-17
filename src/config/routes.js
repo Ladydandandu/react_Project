@@ -1,5 +1,6 @@
 import Home from '../components/home';
 import Category from '../containers/category/index';
+import Product from '../containers/product';
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         component:Category   //组件
     },
 
+    {
+        path:'/product',  //路由路径
+        exact:true,  //是否严格匹配路径
+        component:Product   //组件
+    },
 ];
 
 export default routes;
